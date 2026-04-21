@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Sneh Dental Clinic social preview</title>
+  <desc id="desc">Dental clinic in Vadodara with Nizampura and New Sama branches.</desc>
+  <rect width="1200" height="630" fill="#EEF6FB"/>
+  <circle cx="1010" cy="120" r="180" fill="#D8ECF8"/>
+  <circle cx="120" cy="560" r="220" fill="#D8ECF8"/>
+  <rect x="92" y="86" width="1016" height="458" rx="36" fill="#ffffff" stroke="#C5D9E8" stroke-width="3"/>
+  <g transform="translate(144 146)">
+    <circle cx="92" cy="92" r="82" fill="#EEF6FB"/>
+    <path d="M92 44c-27 0-45 20-45 45 0 37 22 68 35 68 8 0 5-30 10-30s2 30 10 30c13 0 35-31 35-68 0-25-18-45-45-45z" fill="#ffffff" stroke="#0B5E8E" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M72 82c12 8 28 8 40 0" fill="none" stroke="#1E8DC4" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g font-family="Plus Jakarta Sans, Inter, Arial, sans-serif">
+    <text x="330" y="220" fill="#073D5F" font-size="66" font-weight="800">Sneh Dental Clinic</text>
+    <text x="332" y="286" fill="#0B5E8E" font-size="32" font-weight="700">Dental Clinic in Vadodara</text>
+    <text x="332" y="350" fill="#374151" font-size="26">Trusted dental care since 2005</text>
+    <text x="332" y="396" fill="#374151" font-size="26">Nizampura &amp; New Sama branches</text>
+    <rect x="332" y="442" width="330" height="54" rx="27" fill="#0B5E8E"/>
+    <text x="370" y="477" fill="#ffffff" font-size="22" font-weight="700">Book via WhatsApp</text>
+  </g>
+</svg>

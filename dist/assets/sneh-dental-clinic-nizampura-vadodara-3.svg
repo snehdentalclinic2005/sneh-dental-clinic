@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Nizampura Clinic Photo 3</title>
+  <desc id="desc">Temporary placeholder for Nizampura Clinic Photo 3. Replace with final clinic photography.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EEF6FB"/>
+      <stop offset="1" stop-color="#D8ECF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect x="96" y="96" width="1008" height="608" rx="36" fill="#ffffff" stroke="#C5D9E8" stroke-width="3"/>
+  <g transform="translate(486 210)">
+    <circle cx="114" cy="114" r="104" fill="#EEF6FB"/>
+    <path d="M114 57c-33 0-56 24-56 55 0 47 28 86 43 86 10 0 6-37 13-37s3 37 13 37c15 0 43-39 43-86 0-31-23-55-56-55z" fill="#ffffff" stroke="#0B5E8E" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M88 104c15 10 37 10 52 0" fill="none" stroke="#1E8DC4" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="600" y="520" text-anchor="middle" fill="#073D5F" font-family="Plus Jakarta Sans, Inter, Arial, sans-serif" font-size="44" font-weight="800">Nizampura Clinic Photo 3</text>
+  <text x="600" y="574" text-anchor="middle" fill="#0B5E8E" font-family="Plus Jakarta Sans, Inter, Arial, sans-serif" font-size="24" font-weight="700">Replace with final clinic photo</text>
+</svg>
