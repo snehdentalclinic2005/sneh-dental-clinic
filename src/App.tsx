@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+const BASE = import.meta.env.BASE_URL;
+
 interface GalleryImage {
   id: number;
   src: string;
@@ -109,42 +111,42 @@ const DOCTOR_TRUST_POINTS = [
 const NIZAMPURA_GALLERY: GalleryImage[] = [
   {
     id: 1,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-01.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-01.jpg`,
     label: "Sneh Dental Clinic Nizampura branch reception area Vadodara",
   },
   {
     id: 2,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-02.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-02.jpg`,
     label: "Dental treatment room at Sneh Dental Clinic Nizampura Vadodara",
   },
   {
     id: 3,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-03.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-03.jpg`,
     label: "Modern dental equipment at Sneh Dental Clinic Nizampura Vadodara",
   },
   {
     id: 4,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-04.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-04.jpg`,
     label: "Sneh Dental Clinic Nizampura branch interior Vadodara",
   },
   {
     id: 5,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-05.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-05.jpg`,
     label: "Patient care area at Sneh Dental Clinic Nizampura Vadodara",
   },
   {
     id: 6,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-06.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-06.jpg`,
     label: "Dental operatory at Sneh Dental Clinic Nizampura Vadodara",
   },
   {
     id: 7,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-07.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-07.jpg`,
     label: "Sterilization unit at Sneh Dental Clinic Nizampura Vadodara",
   },
   {
     id: 8,
-    src: "/assets/sneh-dental-clinic-nizampura-vadodara-08.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-nizampura-vadodara-08.jpg`,
     label: "Waiting area at Sneh Dental Clinic Nizampura Vadodara",
   },
 ];
@@ -152,27 +154,27 @@ const NIZAMPURA_GALLERY: GalleryImage[] = [
 const NEWSAMA_GALLERY: GalleryImage[] = [
   {
     id: 1,
-    src: "/assets/sneh-dental-clinic-new-sama-vadodara-01.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-new-sama-vadodara-01.jpg`,
     label: "Sneh Dental Clinic New Sama branch reception Vadodara",
   },
   {
     id: 2,
-    src: "/assets/sneh-dental-clinic-new-sama-vadodara-02.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-new-sama-vadodara-02.jpg`,
     label: "Dental treatment room at Sneh Dental Clinic New Sama Vadodara",
   },
   {
     id: 3,
-    src: "/assets/sneh-dental-clinic-new-sama-vadodara-03.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-new-sama-vadodara-03.jpg`,
     label: "Modern dental chair at Sneh Dental Clinic New Sama Vadodara",
   },
   {
     id: 4,
-    src: "/assets/sneh-dental-clinic-new-sama-vadodara-04.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-new-sama-vadodara-04.jpg`,
     label: "Sneh Dental Clinic New Sama branch interior Vadodara",
   },
   {
     id: 5,
-    src: "/assets/sneh-dental-clinic-new-sama-vadodara-05.jpg",
+    src: `${BASE}assets/sneh-dental-clinic-new-sama-vadodara-05.jpg`,
     label: "Waiting area at Sneh Dental Clinic New Sama Vadodara",
   },
 ];
@@ -182,37 +184,37 @@ const BEFORE_AFTER_RESULTS = [
     id: 1,
     title: "Treatment Case 01",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-01.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-01.jpg`,
   },
   {
     id: 2,
     title: "Treatment Case 02",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-02.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-02.jpg`,
   },
   {
     id: 3,
     title: "Treatment Case 03",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-03.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-03.jpg`,
   },
   {
     id: 4,
     title: "Treatment Case 04",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-04.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-04.jpg`,
   },
   {
     id: 5,
     title: "Treatment Case 05",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-05.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-05.jpg`,
   },
   {
     id: 6,
     title: "Treatment Case 06",
     treatment: "Before & After Collage",
-    src: "/assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-06.jpg",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-06.jpg`,
   },
 ];
 
@@ -1030,7 +1032,7 @@ export default function App() {
             aria-label="Sneh Dental Clinic home"
           >
             <img
-              src="/assets/sneh-dental-clinic-logo.png"
+              src={`${BASE}assets/sneh-dental-clinic-logo.png`}
               alt="Sneh Dental Clinic"
               className="h-10 w-auto object-contain"
             />
@@ -1138,7 +1140,7 @@ export default function App() {
             <div className="flex justify-center">
               <div className="flex w-full max-w-sm flex-col items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B5E8E] via-[#0A6FA6] to-[#1E8DC4] px-8 py-10 shadow-nav">
                 <img
-                  src="/assets/sneh-dental-clinic-logo.png"
+                  src={`${BASE}assets/sneh-dental-clinic-logo.png`}
                   alt="Sneh Dental Clinic"
                   className="mx-auto mb-6 h-60 w-auto rounded-2xl bg-white/95 object-contain p-5 shadow-md"
                 />
@@ -1259,7 +1261,7 @@ export default function App() {
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <img
-                  src="/assets/sneh-dental-clinic-logo.png"
+                  src={`${BASE}assets/sneh-dental-clinic-logo.png`}
                   alt="Sneh Dental Clinic"
                   className="h-16 w-auto rounded-lg bg-white/95 object-contain p-1.5"
                 />
