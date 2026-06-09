@@ -6,17 +6,29 @@ import {
   MapPin,
   Menu,
   Phone,
+  Play,
+  Pause,
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const BASE = import.meta.env.BASE_URL;
+const GALLERY_ROTATION_MS = 5000;
 
 interface GalleryImage {
   id: number;
   src: string;
   label: string;
 }
+
+interface GalleryVideo {
+  id: number;
+  type: "video";
+  src: string;
+  label: string;
+}
+
+type GalleryMedia = GalleryImage | GalleryVideo;
 
 interface LightboxState {
   open: boolean;
@@ -65,6 +77,7 @@ const NAV_LINKS = [
   { id: "treatment-results", label: "Results" },
   { id: "nizampura-branch", label: "Nizampura Branch" },
   { id: "new-sama-branch", label: "New Sama Branch" },
+  { id: "dentistry-facts-gallery", label: "Dental Facts" },
 ];
 
 const SERVICES: Service[] = [
@@ -179,6 +192,54 @@ const NEWSAMA_GALLERY: GalleryImage[] = [
   },
 ];
 
+const DENTISTRY_FACTS_GALLERY: GalleryImage[] = [
+  {
+    id: 1,
+    src: `${BASE}assets/dentistry-facts-gallery-01.jpg`,
+    label: "Dental awareness fact graphic from Sneh Dental Clinic Vadodara",
+  },
+  {
+    id: 2,
+    src: `${BASE}assets/dentistry-facts-gallery-02.jpg`,
+    label: "Root canal and overall health dental fact graphic",
+  },
+  {
+    id: 3,
+    src: `${BASE}assets/dentistry-facts-gallery-03.jpg`,
+    label: "Untreated dental infection awareness graphic",
+  },
+  {
+    id: 4,
+    src: `${BASE}assets/dentistry-facts-gallery-04.jpg`,
+    label: "Tooth anatomy dental fact graphic",
+  },
+  {
+    id: 5,
+    src: `${BASE}assets/dentistry-facts-gallery-05.jpg`,
+    label: "Baby teeth decay awareness graphic",
+  },
+  {
+    id: 6,
+    src: `${BASE}assets/dentistry-facts-gallery-06.jpg`,
+    label: "Dental checkup and heart health awareness graphic",
+  },
+  {
+    id: 7,
+    src: `${BASE}assets/dentistry-facts-gallery-07.jpg`,
+    label: "Wisdom teeth stem cell dental fact graphic",
+  },
+  {
+    id: 8,
+    src: `${BASE}assets/dentistry-facts-gallery-08.jpg`,
+    label: "Dentistry and neglect cost awareness graphic",
+  },
+  {
+    id: 9,
+    src: `${BASE}assets/dentistry-facts-gallery-09.jpg`,
+    label: "Mouth breathing and tooth decay awareness graphic",
+  },
+];
+
 const BEFORE_AFTER_RESULTS = [
   {
     id: 1,
@@ -216,13 +277,57 @@ const BEFORE_AFTER_RESULTS = [
     treatment: "Before & After Collage",
     src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-06.jpg`,
   },
+  {
+    id: 7,
+    title: "Treatment Case 07",
+    treatment: "Before & After Collage",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-07.jpg`,
+  },
+  {
+    id: 8,
+    title: "Treatment Case 08",
+    treatment: "Before & After Collage",
+    src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-08.jpg`,
+  },
+];
+
+const BEFORE_AFTER_VIDEO_LABELS = [
+  "Dental crown restoration before and after at Sneh Dental Clinic Vadodara",
+  "Teeth whitening smile makeover before and after at Sneh Dental Clinic Vadodara",
+  "Root canal treatment result before and after at Sneh Dental Clinic Vadodara",
+  "Dental bridge fitting before and after at Sneh Dental Clinic Vadodara",
+  "Tooth filling restoration before and after at Sneh Dental Clinic Vadodara",
+  "Dental implant placement before and after at Sneh Dental Clinic Vadodara",
+  "Smile correction with veneers before and after at Sneh Dental Clinic Vadodara",
+  "Complete denture fitting before and after at Sneh Dental Clinic Vadodara",
+  "Orthodontic braces treatment before and after at Sneh Dental Clinic Vadodara",
+  "Tooth extraction and restoration before and after at Sneh Dental Clinic Vadodara",
+  "Full mouth rehabilitation before and after at Sneh Dental Clinic Vadodara",
+  "Cosmetic dental treatment before and after at Sneh Dental Clinic Vadodara",
+  "Scaling and polishing before and after at Sneh Dental Clinic Vadodara",
+  "Smile transformation before and after at Sneh Dental Clinic Vadodara",
+  "Dental treatment success story before and after at Sneh Dental Clinic Vadodara",
+  "Patient smile makeover before and after at Sneh Dental Clinic Vadodara",
 ];
 
 const TREATMENT_RESULT_IMAGES: GalleryImage[] = BEFORE_AFTER_RESULTS.map((result) => ({
   id: result.id,
   src: result.src,
-  label: `Before and after dental treatment result ${result.id} at Sneh Dental Clinic Vadodara`,
+  label: `Before and after dental treatment case ${result.id} at Sneh Dental Clinic Vadodara`,
 }));
+
+const TREATMENT_RESULT_MEDIA: GalleryMedia[] = [
+  ...TREATMENT_RESULT_IMAGES,
+  ...Array.from({ length: 16 }, (_, index) => {
+    const id = index + 9;
+    return {
+      id,
+      type: "video" as const,
+      src: `${BASE}assets/before-after-dental-treatment-sneh-dental-clinic-vadodara-${String(id).padStart(2, "0")}.mp4`,
+      label: BEFORE_AFTER_VIDEO_LABELS[index] ?? `Before and after dental treatment video at Sneh Dental Clinic Vadodara`,
+    };
+  }),
+];
 const BRANCHES: Branch[] = [
   {
     id: "nizampura-branch",
@@ -736,7 +841,7 @@ function GallerySlider({
 
     timerRef.current = setInterval(() => {
       setCurrent((value) => (value + 1) % images.length);
-    }, 3500);
+    }, GALLERY_ROTATION_MS);
   }, [images.length]);
 
   useEffect(() => {
@@ -847,6 +952,220 @@ function GallerySlider({
   );
 }
 
+function TreatmentMediaSlider({
+  media,
+  onOpenImage,
+}: {
+  media: GalleryMedia[];
+  onOpenImage: (imageIndex: number) => void;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const item = media[current];
+  const isVideo = "type" in item && item.type === "video";
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (media.length <= 1) return;
+
+    timerRef.current = setInterval(() => {
+      setCurrent((value) => (value + 1) % media.length);
+    }, GALLERY_ROTATION_MS);
+  }, [media.length]);
+
+  useEffect(() => {
+    if (paused || videoPlaying) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+
+    resetTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [paused, resetTimer, videoPlaying]);
+
+  useEffect(() => {
+    setVideoPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [current]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
+
+  if (media.length === 0) {
+    return <GalleryComingSoon />;
+  }
+
+  const pauseBriefly = () => {
+    setPaused(true);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => setPaused(false), 6000);
+  };
+
+  const handleNav = (delta: number) => {
+    setCurrent((value) => (value + delta + media.length) % media.length);
+    pauseBriefly();
+  };
+
+  const handleDot = (index: number) => {
+    setCurrent(index);
+    pauseBriefly();
+  };
+
+  const toggleVideo = async () => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      try {
+        if (videoRef.current.currentTime <= 0.25) {
+          videoRef.current.currentTime = 0;
+        }
+        await videoRef.current.play();
+        setVideoPlaying(true);
+      } catch {
+        setVideoPlaying(false);
+      }
+      return;
+    }
+
+    videoRef.current.pause();
+    setVideoPlaying(false);
+    pauseBriefly();
+  };
+
+  const imageIndex = TREATMENT_RESULT_IMAGES.findIndex((image) => image.id === item.id);
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-[#E3EDF6] shadow-card">
+      <div className="relative h-72 select-none bg-[#F0F7FC] md:h-96">
+        {isVideo ? (
+          <div className="relative size-full bg-black">
+            <video
+              ref={videoRef}
+              key={item.src}
+              src={item.src}
+              className="size-full cursor-pointer object-contain"
+              preload="auto"
+              playsInline
+              onClick={toggleVideo}
+              onLoadedData={(e) => {
+                const video = e.currentTarget;
+                if (video.currentTime < 0.25) {
+                  video.currentTime = 0.25;
+                }
+              }}
+              onPlay={() => setVideoPlaying(true)}
+              onPause={() => setVideoPlaying(false)}
+              onEnded={() => {
+                setVideoPlaying(false);
+                handleNav(1);
+              }}
+            >
+              Your browser does not support the video tag.
+            </video>
+            {/* Initial play indicator — only shown when video hasn't started, fades on hover */}
+            {!videoPlaying && (
+              <div
+                className="pointer-events-none absolute inset-0 flex items-center justify-center"
+              >
+                <span className="flex size-16 items-center justify-center rounded-full bg-white/70 text-[#0B5E8E] opacity-60">
+                  <Play size={30} fill="currentColor" />
+                </span>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <ImageWithFallback
+              key={item.src}
+              src={item.src}
+              alt={item.label}
+              fallbackLabel={item.label}
+              className="size-full object-contain"
+            />
+            <button
+              type="button"
+              className="absolute inset-0 z-0 size-full cursor-zoom-in bg-transparent transition-colors hover:bg-black/5"
+              onClick={() => {
+                if (imageIndex >= 0) onOpenImage(imageIndex);
+              }}
+              aria-label={`View ${item.label} fullscreen`}
+            />
+          </>
+        )}
+        <button
+          type="button"
+          className="absolute left-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0B5E8E] shadow-md transition-colors hover:bg-white"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleNav(-1);
+          }}
+          aria-label="Previous gallery item"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          type="button"
+          className="absolute right-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0B5E8E] shadow-md transition-colors hover:bg-white"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleNav(1);
+          }}
+          aria-label="Next gallery item"
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
+      <div className="flex items-center justify-center gap-3 bg-white px-4 py-3">
+        {isVideo && (
+          <button
+            type="button"
+            className="flex size-9 shrink-0 items-center justify-center rounded-full border border-[#E3EDF6] bg-[#F0F7FC] text-[#0B5E8E] shadow-sm transition-colors hover:bg-[#D6EBF7]"
+            onClick={toggleVideo}
+            aria-label={videoPlaying ? "Pause treatment result video" : "Play treatment result video"}
+          >
+            {videoPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />}
+          </button>
+        )}
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5">
+            {media.map((mediaItem, index) => (
+              <button
+                key={mediaItem.id}
+                type="button"
+                onClick={() => handleDot(index)}
+                aria-label={`Go to gallery item ${index + 1}`}
+                className="rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B5E8E]/40"
+                style={{
+                  width: index === current ? "20px" : "8px",
+                  height: "8px",
+                  backgroundColor: index === current ? "#0B5E8E" : "#C5D9E8",
+                }}
+              />
+            ))}
+          </div>
+          <p className="text-xs text-[#9CA3AF]">
+            {current + 1} / {media.length}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GalleryComingSoon() {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-[#E3EDF6] bg-[#F0F7FC] px-6 py-16 text-center shadow-card">
@@ -871,20 +1190,47 @@ function BeforeAfterSection({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-bold text-[#0B5E8E] md:text-4xl">
-            Before & After Treatment Results
+            Patient Success Stories
           </h2>
           <p className="mt-3 text-base text-[#6B7280]">
-            Patient treatment collages and smile transformation outcomes
+            Smile transformations of our happy patients
           </p>
         </div>
-        <GallerySlider
-          images={TREATMENT_RESULT_IMAGES}
-          onOpen={(index) => onGalleryOpen(TREATMENT_RESULT_IMAGES, index)}
+        <TreatmentMediaSlider
+          media={TREATMENT_RESULT_MEDIA}
+          onOpenImage={(index) => onGalleryOpen(TREATMENT_RESULT_IMAGES, index)}
         />
       </div>
     </section>
   );
 }
+
+function DentistryFactsSection({
+  onGalleryOpen,
+}: {
+  onGalleryOpen: (images: GalleryImage[], index: number) => void;
+}) {
+  return (
+    <section id="dentistry-facts-gallery" className="bg-[#F5FAFE] py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold text-[#0B5E8E] md:text-4xl">
+            Dentistry Facts Gallery
+          </h2>
+          <p className="mt-3 text-base text-[#6B7280]">
+            Helpful dental awareness posts and patient education media
+          </p>
+        </div>
+
+        <GallerySlider
+          images={DENTISTRY_FACTS_GALLERY}
+          onOpen={(index) => onGalleryOpen(DENTISTRY_FACTS_GALLERY, index)}
+        />
+      </div>
+    </section>
+  );
+}
+
 function BranchSection({
   branch,
   onGalleryOpen,
@@ -1033,7 +1379,7 @@ export default function App() {
           >
             <img
               src={`${BASE}assets/sneh-dental-clinic-logo.png`}
-              alt="Sneh Dental Clinic"
+              alt="Sneh Dental Clinic Vadodara logo"
               className="h-10 w-auto object-contain"
             />
             <div className="hidden sm:block">
@@ -1111,7 +1457,7 @@ export default function App() {
               <h1 className="text-4xl font-extrabold leading-tight text-[#073D5F] md:text-5xl lg:text-6xl">
                 Sneh Dental Clinic
               </h1>
-              <p className="text-2xl font-semibold text-[#0B5E8E] md:text-3xl">
+              <p className="text-2xl font-semibold text-[#0B5E8E] md:text-3xl" role="doc-subtitle">
                 We Create Beautiful Smile
               </p>
               <p className="max-w-md text-base leading-relaxed text-[#4B5563] md:text-lg">
@@ -1141,7 +1487,7 @@ export default function App() {
               <div className="flex w-full max-w-sm flex-col items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B5E8E] via-[#0A6FA6] to-[#1E8DC4] px-8 py-10 shadow-nav">
                 <img
                   src={`${BASE}assets/sneh-dental-clinic-logo.png`}
-                  alt="Sneh Dental Clinic"
+                  alt="Sneh Dental Clinic Vadodara — trusted dental care since 2005"
                   className="mx-auto mb-6 h-60 w-auto rounded-2xl bg-white/95 object-contain p-5 shadow-md"
                 />
                 <div className="space-y-2 text-center">
@@ -1253,17 +1599,20 @@ export default function App() {
         {BRANCHES.map((branch) => (
           <BranchSection key={branch.id} branch={branch} onGalleryOpen={openLightbox} />
         ))}
+
+        <DentistryFactsSection onGalleryOpen={openLightbox} />
       </main>
 
-      <footer className="bg-[#073D5F] py-12">
+      <footer className="bg-[#073D5F] py-12" role="contentinfo">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 text-white md:grid-cols-3">
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <img
                   src={`${BASE}assets/sneh-dental-clinic-logo.png`}
-                  alt="Sneh Dental Clinic"
+                  alt="Sneh Dental Clinic Vadodara logo"
                   className="h-16 w-auto rounded-lg bg-white/95 object-contain p-1.5"
+                  loading="lazy"
                 />
                 <div>
                   <p className="text-lg font-bold leading-tight text-white">Sneh Dental Clinic</p>
@@ -1275,7 +1624,7 @@ export default function App() {
                 Vadodara since 2005.
               </p>
             </div>
-            <div>
+            <address className="not-italic">
               <p className="mb-3 text-lg font-semibold text-white">Nizampura Branch</p>
               <p className="mb-2 text-base text-white/65">
                 FF-6, Cascade Complex, Nizampura Rd, Vadodara - 390024
@@ -1287,8 +1636,8 @@ export default function App() {
               >
                 9427899577
               </a>
-            </div>
-            <div>
+            </address>
+            <address className="not-italic">
               <p className="mb-3 text-lg font-semibold text-white">New Sama Branch</p>
               <p className="mb-2 text-base text-white/65">
                 2, Sharman Complex, New Sama Rd, Vadodara - 390008
@@ -1300,7 +1649,7 @@ export default function App() {
               >
                 9409458877
               </a>
-            </div>
+            </address>
           </div>
           <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/15 pt-6 text-base text-white/40 sm:flex-row">
             <p>© {new Date().getFullYear()} Sneh Dental Clinic. All rights reserved.</p>
@@ -1359,6 +1708,3 @@ export default function App() {
     </div>
   );
 }
-
-
-
